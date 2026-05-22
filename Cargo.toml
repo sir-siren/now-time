@@ -1,0 +1,36 @@
+[package]
+name = "now-time"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.95.0"
+description = "Get the current UTC or local time with zero boilerplate"
+license = "MIT"
+repository = "https://github.com/sir-siren/now-time"
+homepage = "https://github.com/sir-siren/now-time"
+documentation = "https://docs.rs/now-time"
+readme = "README.md"
+keywords = [
+    "time",
+    "datetime",
+    "clock",
+    "utc",
+    "timestamp"
+]
+categories = ["date-and-time"]
+include = [
+    "src/**/*",
+    "examples/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE",
+]
+
+[lib]
+name = "now_time"
+
+[dependencies]
+chrono = { version = "0.4", features = ["clock"] }
+thiserror = "2"
+
+[dev-dependencies]
+pretty_assertions = "1"

@@ -1,0 +1,67 @@
+[tools]
+rust = "1.95.0"
+
+[env]
+CARGO_TERM_COLOR = "always"
+RUST_LOG = "info"
+
+[tasks.login]
+description = "log in to crates.io, run once and paste your token from https://crates.io/settings/tokens"
+run = "cargo login"
+
+[tasks.check-name]
+description = "check whether now-time is already taken on crates.io"
+run = "cargo search now-time"
+
+[tasks.dry-run]
+description = "full publish dry-run, catches problems before anything goes public"
+run = "cargo publish --dry-run"
+
+[tasks.list-files]
+description = "show which files will be bundled into the crate"
+run = "cargo package --list"
+
+[tasks.publish]
+description = "publish to crates.io, version is permanent so run dry-run first"
+depends = ["dry-run"]
+run = "cargo publish"
+
+[tasks.check]
+description = "type-check and borrow-check"
+run = "cargo check"
+
+[tasks.test]
+description = "run unit tests, integration tests and doctests"
+run = "cargo test"
+
+[tasks.docs]
+description = "build and open docs locally"
+run = "cargo doc --open"
+
+[tasks.doc-test]
+description = "run doctests in isolation"
+run = "cargo test --doc"
+
+[tasks.release-build]
+description = "verify the release profile compiles clean"
+run = 'RUSTFLAGS="-C target-cpu=native" cargo build --release'
+
+[tasks.run-example]
+description = "run the basic_usage example"
+run = "cargo run --example basic_usage"
+
+[tasks.tree]
+description = "show full dependency tree"
+run = "cargo tree"
+
+[tasks.tree-dupes]
+description = "flag duplicate crate versions pulled in by deps"
+run = "cargo tree --duplicates"
+
+[tasks.ready]
+description = "run every quality gate then do a dry-run, green means ready to publish"
+depends = ["check", "test", "doc-test", "release-build", "dry-run"]
+
+[tasks.testrun]
+alias = "tr"
+run = "cargo run --example basic_usage"
