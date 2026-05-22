@@ -44,7 +44,7 @@ run = "cargo test --doc"
 
 [tasks.release-build]
 description = "verify the release profile compiles clean"
-run = 'RUSTFLAGS="-C target-cpu=native" cargo build --release'
+run = 'cargo build --release'
 
 [tasks.run-example]
 description = "run the basic_usage example"

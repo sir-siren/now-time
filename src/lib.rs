@@ -1,7 +1,5 @@
-pub mod errors;
 mod snapshot;
 
-pub use errors::TimeError;
 pub use snapshot::TimeSnapshot;
 
 pub fn now_utc() -> TimeSnapshot {

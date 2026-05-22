@@ -2,7 +2,7 @@
 
 **Get the current UTC or local time with zero boilerplate.**
 
-[![Rust](https://img.shields.io/badge/Rust-1.85+-DEA584?style=flat&logo=rust&logoColor=FF9170)](https://www.rust-lang.org)
+[![Rust](https://img.shields.io/badge/Rust-1.95+-DEA584?style=flat&logo=rust&logoColor=FF9170)](https://www.rust-lang.org)
 [![crates.io](https://img.shields.io/crates/v/now-time?style=flat)](https://crates.io/crates/now-time)
 [![docs.rs](https://img.shields.io/docsrs/now-time?style=flat)](https://docs.rs/now-time)
 [![License](https://img.shields.io/badge/license-MIT-AEC6CF?style=flat)](./LICENSE)
@@ -17,7 +17,7 @@ Two dependencies: `chrono` for the time primitives, `thiserror` for errors. Ever
 
 ```toml
 [dependencies]
-now-time = "1.2.0"
+now-time = "1.0.3"
 ```
 
 ## Usage

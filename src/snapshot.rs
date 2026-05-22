@@ -10,6 +10,8 @@ impl TimeSnapshot {
         Self { inner: Utc::now() }
     }
 
+    /// Captures the current time. Internally stored as UTC; local offset is
+    /// applied at output time via `to_local_rfc3339()`.
     pub fn now_local() -> Self {
         Self { inner: Utc::now() }
     }
