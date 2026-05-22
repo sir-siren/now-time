@@ -1,7 +1,5 @@
 use chrono::{DateTime, Local, Utc};
 
-use crate::errors::TimeError;
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct TimeSnapshot {
     inner: DateTime<Utc>,
@@ -13,7 +11,7 @@ impl TimeSnapshot {
     }
 
     pub fn now_local() -> Self {
-        Self { inner: Local::now().to_utc() }
+        Self { inner: Utc::now() }
     }
 
     pub fn unix_seconds(&self) -> i64 {
@@ -37,15 +35,8 @@ impl TimeSnapshot {
         self.inner.to_rfc2822()
     }
 
-    pub fn format(&self, pattern: &str) -> Result<String, TimeError> {
-        use std::fmt::Write as _;
-
-        let mut rendered = String::new();
-        write!(rendered, "{}", self.inner.format(pattern)).map_err(|_| {
-            TimeError::InvalidFormatPattern { pattern: pattern.to_string() }
-        })?;
-
-        Ok(rendered)
+    pub fn format(&self, pattern: &str) -> String {
+        self.inner.format(pattern).to_string()
     }
 
     pub fn as_datetime(&self) -> &DateTime<Utc> {
@@ -62,7 +53,6 @@ impl std::fmt::Display for TimeSnapshot {
 #[cfg(test)]
 mod tests {
     use super::TimeSnapshot;
-    use crate::errors::TimeError;
 
     #[test]
     fn now_utc_unix_seconds_is_after_year_2023() {
@@ -90,14 +80,14 @@ mod tests {
 
     #[test]
     fn format_year_returns_four_digit_string() {
-        let year = TimeSnapshot::now_utc().format("%Y").expect("year format must succeed");
+        let year = TimeSnapshot::now_utc().format("%Y");
         assert_eq!(year.len(), 4, "year must be 4 digits, got: {year}");
         assert!(year.parse::<u32>().is_ok(), "year must be numeric, got: {year}");
     }
 
     #[test]
     fn format_date_returns_ten_char_string() {
-        let date = TimeSnapshot::now_utc().format("%Y-%m-%d").expect("date format must succeed");
+        let date = TimeSnapshot::now_utc().format("%Y-%m-%d");
         assert_eq!(date.len(), 10, "YYYY-MM-DD must be 10 chars, got: {date}");
     }
 
@@ -112,14 +102,5 @@ mod tests {
         let utc = TimeSnapshot::now_utc().unix_seconds();
         let local = TimeSnapshot::now_local().unix_seconds();
         assert!((utc - local).abs() <= 1);
-    }
-
-    #[test]
-    fn invalid_format_pattern_returns_error() {
-        let result = TimeSnapshot::now_utc().format("%Q-invalid");
-        assert!(
-            matches!(result, Err(TimeError::InvalidFormatPattern { .. })),
-            "unknown specifier must return InvalidFormatPattern"
-        );
     }
 }

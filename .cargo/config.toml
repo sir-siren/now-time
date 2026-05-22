@@ -1,6 +1,6 @@
 [profile.release]
 opt-level = "z"
-lto = false
+lto = "thin"
 codegen-units = 1
 strip = true
 overflow-checks = false
