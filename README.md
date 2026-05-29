@@ -17,7 +17,7 @@ One dependency: `chrono` for time primitives. Everything else is stdlib.
 
 ```toml
 [dependencies]
-now-time = "1.0.3"
+now-time = "1.0.4"
 ```
 
 ## Usage
