@@ -1,4 +1,5 @@
 use now_time::{TimeSnapshot, now_local, now_utc, unix_timestamp, unix_timestamp_millis};
+use pretty_assertions::assert_eq;
 
 #[test]
 fn now_utc_convenience_fn_returns_same_second_as_snapshot() {

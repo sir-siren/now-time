@@ -11,7 +11,7 @@
 
 `now-time` gives you the current time in one line. No setup, no config, no boilerplate.
 
-Two dependencies: `chrono` for the time primitives, `thiserror` for errors. Everything else is stdlib.
+One dependency: `chrono` for time primitives. Everything else is stdlib.
 
 ## Install
 
@@ -62,6 +62,13 @@ Uses chrono's strftime specifiers:
 | `%S` | second (00-59) | `00`    |
 
 Full list: https://docs.rs/chrono/latest/chrono/format/strftime
+
+### Note on `now_local()`
+
+`now_local()` and `now_utc()` capture the **same instant** — both store UTC
+internally. The local timezone offset is applied only when you call
+`to_local_rfc3339()`. This means `now_local().unix_seconds()` is identical
+to `now_utc().unix_seconds()`.
 
 ## API Reference
 

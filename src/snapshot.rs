@@ -1,5 +1,6 @@
 use chrono::{DateTime, Local, Utc};
 
+#[must_use = "a TimeSnapshot does nothing unless you read from it"]
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct TimeSnapshot {
     inner: DateTime<Utc>,
@@ -10,8 +11,6 @@ impl TimeSnapshot {
         Self { inner: Utc::now() }
     }
 
-    /// Captures the current time. Internally stored as UTC; local offset is
-    /// applied at output time via `to_local_rfc3339()`.
     pub fn now_local() -> Self {
         Self { inner: Utc::now() }
     }
@@ -54,6 +53,8 @@ impl std::fmt::Display for TimeSnapshot {
 
 #[cfg(test)]
 mod tests {
+    use pretty_assertions::assert_eq;
+
     use super::TimeSnapshot;
 
     #[test]
